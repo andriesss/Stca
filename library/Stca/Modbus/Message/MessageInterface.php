@@ -37,6 +37,13 @@ interface MessageInterface
     public function getSlaveAddress();
 
     /**
+     * Sets the composition of the message frame
+     *
+     * @param string $frame - frame containing binary data
+     */
+    public function setMessageFrame($frame);
+
+    /**
      * Composition of the slave address and protocol identifier
      *
      * @return string - 3 byte string

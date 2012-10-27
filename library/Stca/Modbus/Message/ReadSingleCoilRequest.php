@@ -2,6 +2,8 @@
 
 namespace Stca\Modbus\Message;
 
+use UnexpectedValueException;
+
 class ReadSingleCoilRequest extends AbstractMessage implements RequestInterface
 {
     /**
@@ -18,6 +20,7 @@ class ReadSingleCoilRequest extends AbstractMessage implements RequestInterface
         $this->setFunctionCode(0x1);
         $this->setSlaveAddress($slaveAddress);
         $this->setCoil($coil);
+        $this->setMessageFrame(pack('n', $this->getCoil()));
     }
 
     /**
@@ -41,23 +44,26 @@ class ReadSingleCoilRequest extends AbstractMessage implements RequestInterface
     }
 
     /**
-     * Composition of the slave address and protocol identifier
-     *
-     * @return string - 3 byte string
-     */
-    public function getMessageFrame()
-    {
-        return pack('CCn', $this->getSlaveAddress(), $this->getFunctionCode(), $this->getCoil());
-    }
-
-    /**
      * Validate the specified response against the current request.
      *
-     * @param MessageInterface $response
+     * @param ResponseMessage $response
+     * @throws UnexpectedValueException
      * @return boolean
      */
-    public function validateResponse(MessageInterface $response)
+    public function validateResponse(ResponseMessage $response)
     {
-        // TODO: Implement validateResponse() method.
+        if ($this->getTransactionId() !== $response->getTransactionId()) {
+            throw new UnexpectedValueException(
+                sprintf('Transaction id mismatch. Expected %s, got %s', $this->getTransactionId(), $response->getTransactionId())
+            );
+        }
+
+        if ($this->getSlaveAddress() !== $response->getSlaveAddress()) {
+            throw new UnexpectedValueException(
+                sprintf('Slave address mismatch. Expected %s, got %s', $this->getSlaveAddress(), $response->getSlaveAddress())
+            );
+        }
+
+        return true;
     }
 }

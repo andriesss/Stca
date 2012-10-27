@@ -21,6 +21,13 @@ abstract class AbstractMessage implements MessageInterface
     private $slaveAddress;
 
     /**
+     * Binary data of message frame
+     *
+     * @var string
+     */
+    private $messageFrame;
+
+    /**
      * Transaction identifier
      *
      * @var string
@@ -83,6 +90,28 @@ abstract class AbstractMessage implements MessageInterface
     public function getSlaveAddress()
     {
         return $this->slaveAddress;
+    }
+
+    /**
+     * Sets the composition of the message frame
+     *
+     * @param string $frame - frame containing binary data
+     * @return AbstractMessage
+     */
+    public function setMessageFrame($frame)
+    {
+        $this->messageFrame = $frame;
+        return $this;
+    }
+
+    /**
+     * Composition of the slave address and protocol identifier
+     *
+     * @return string
+     */
+    public function getMessageFrame()
+    {
+        return $this->messageFrame;
     }
 
     /**

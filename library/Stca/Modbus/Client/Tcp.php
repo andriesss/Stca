@@ -3,6 +3,7 @@
 namespace Stca\Modbus\Client;
 
 use Stca\Modbus\Message\RequestInterface;
+use Stca\Modbus\Message\ResponseMessage;
 use RuntimeException;
 use InvalidArgumentException;
 
@@ -144,23 +145,18 @@ class Tcp extends AbstractClient
     {
         $this->assertConnected();
 
-        $transaction = fread($this->socket, 2);
-        $protocol    = fread($this->socket, 2);
-        $length      = fread($this->socket, 2);
-        $data        = fread($this->socket, (int) bin2hex($length));
-        $unit        = substr($data, 0, 1);
-        $function    = substr($data, 1, 1);
-        $data        = substr($data, 3);
+        $response = new ResponseMessage();
+        $response->setTransactionId(bin2hex(fread($this->socket, 2)));
+        $response->setProtocol(bin2hex(fread($this->socket, 2)));
 
-        return array(
-            'transaction' => bin2hex($transaction),
-            'protocol'    => bin2hex($protocol),
-            'length'      => (int) bin2hex($length),
-            'unit'        => bin2hex($unit),
-            'function'    => bin2hex($function),
-            'data'        => bin2hex($data),
-            'message'     => bin2hex($transaction . $protocol . $length . $unit . $function . $data)
-        );
+        $length = fread($this->socket, 2);
+        $data   = fread($this->socket, (int) bin2hex($length));
+
+        $response->setFunctionCode(bin2hex(substr($data, 1, 1)));
+        $response->setSlaveAddress(bin2hex(substr($data, 0, 1)));
+        $response->setMessageFrame(bin2hex(substr($data, 3)));
+
+        return $response;
     }
 
     /**

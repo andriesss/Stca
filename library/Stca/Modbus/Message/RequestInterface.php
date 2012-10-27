@@ -7,8 +7,8 @@ interface RequestInterface extends MessageInterface
     /**
      * Validate the specified response against the current request.
      *
-     * @param MessageInterface $response
+     * @param ResponseMessage $response
      * @return boolean
      */
-    public function validateResponse(MessageInterface $response);
+    public function validateResponse(ResponseMessage $response);
 }
