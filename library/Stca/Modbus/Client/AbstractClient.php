@@ -65,6 +65,6 @@ abstract class AbstractClient implements ClientInterface
     protected function buildFrame(RequestInterface $request)
     {
         $body = pack('CC', $request->getSlaveAddress(), $request->getFunctionCode()) . $request->getMessageFrame();
-        return pack('nnn', $this->generateTransactionIdentifier(), $this->getProtocolIdentifier(), strlen($body)) . $body;
+        return pack('nnn', $request->getTransactionId(), $this->getProtocolIdentifier(), strlen($body)) . $body;
     }
 }
