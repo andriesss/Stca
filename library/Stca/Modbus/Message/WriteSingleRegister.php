@@ -4,7 +4,7 @@ namespace Stca\Modbus\Message;
 
 use InvalidArgumentException;
 
-class WriteSingleCoil extends ReadSingleCoil
+class WriteSingleRegister extends ReadSingleRegister
 {
     /**
      * @var boolean
@@ -18,32 +18,28 @@ class WriteSingleCoil extends ReadSingleCoil
      */
     public function __construct($slaveAddress, $register, $value)
     {
-        $this->setFunctionCode(0x5);
+        $this->setFunctionCode(0x6);
         $this->setSlaveAddress($slaveAddress);
-        $this->setCoil($register);
+        $this->setRegister($register);
         $this->setValue($value);
-        $this->setMessageFrame(pack('nn', $register, $value));
+        $this->setMessageFrame( pack('nn', $register, $value));
     }
 
     /**
-     * Sets coil value (true = on, false = off)
+     * Sets register value
      *
-     * @param $value
-     * @return WriteSingleCoil
+     * @param  int $value
+     * @return WriteSingleRegister
      * @throws InvalidArgumentException
      */
     public function setValue($value)
     {
-        if (!is_bool($value)) {
-            throw new InvalidArgumentException('Value should be a boolean, got: ' . gettype($value));
-        }
-
         $this->value = $value;
         return $this;
     }
 
     /**
-     * Returns coil value (true = on, false = off)
+     * Returns register value
      *
      * @return bool
      */

@@ -4,12 +4,12 @@ namespace Stca\Modbus\Message;
 
 use UnexpectedValueException;
 
-class ReadSingleCoil extends AbstractMessage implements RequestInterface
+class ReadSingleRegister extends AbstractMessage implements RequestInterface
 {
     /**
      * @var int
      */
-    private $coil;
+    private $register;
 
     /**
      * @param int $slaveAddress
@@ -17,30 +17,30 @@ class ReadSingleCoil extends AbstractMessage implements RequestInterface
      */
     public function __construct($slaveAddress, $register)
     {
-        $this->setFunctionCode(0x1);
+        $this->setFunctionCode(0x3);
         $this->setSlaveAddress($slaveAddress);
-        $this->setCoil($register);
-        $this->setMessageFrame(pack('n', $this->getCoil()));
+        $this->setRegister($register);
+        $this->setMessageFrame(pack('nn', $register, $register -1));
     }
 
     /**
-     * @param $coil
+     * @param $register
      * @return ReadSingleCoil
      */
-    public function setCoil($coil)
+    public function setRegister($register)
     {
-        $this->coil = (int) $coil;
+        $this->register = (int) $register;
         return $this;
     }
 
     /**
-     * Returns coil address
+     * Returns register address
      *
      * @return int
      */
-    public function getCoil()
+    public function getRegister()
     {
-        return $this->coil;
+        return $this->register;
     }
 
     /**
