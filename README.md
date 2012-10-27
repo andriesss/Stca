@@ -7,6 +7,10 @@ We do a lot of industrial aumation at my job, and I wanted to learn more about M
 ```php
 <?php
 
+use Stca\Modbus\Client\Tcp as TcpClient;
+use Stca\Modbus\Message\WriteSingleCoil;
+use Stca\Modbus\Message\ReadSingleBuffer;
+
 class Pump
 {
     private $modbus;
