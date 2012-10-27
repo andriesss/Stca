@@ -9,7 +9,7 @@ We do a lot of industrial aumation at my job, and I wanted to learn more about M
 
 use Stca\Modbus\Client\Tcp as TcpClient;
 use Stca\Modbus\Message\WriteSingleCoil;
-use Stca\Modbus\Message\ReadSingleBuffer;
+use Stca\Modbus\Message\ReadSingleRegister;
 
 class Pump
 {
@@ -38,6 +38,6 @@ class Pump
 
     public function getOilLevel()
     {
-        return $this->modbus->connect()->request(new ReadSingleBuffer(1, 1));
+        return $this->modbus->connect()->request(new ReadSingleRegister(1, 1));
     }
 }
