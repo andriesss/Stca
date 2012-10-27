@@ -105,13 +105,22 @@ class Tcp extends AbstractClient
         return false;
     }
 
+    /**
+     * Sends a request to modbus
+     *
+     * @param RequestInterface $request
+     * @return ResponseMessage
+     */
     public function request(RequestInterface $request)
     {
         $request->setTransactionId($this->generateTransactionIdentifier());
         $frame = $this->buildFrame($request);
 
         $this->write($frame);
-        return $this->read();
+        $response = $this->read();
+
+        $request->validateResponse($response);
+        return $response;
     }
 
     /**
@@ -120,7 +129,7 @@ class Tcp extends AbstractClient
     protected function assertConnected()
     {
         if (!$this->isConnected()) {
-            throw new \RuntimeException('Socket is not connected.');
+            throw new RuntimeException('Socket is not connected.');
         }
     }
 
@@ -139,7 +148,7 @@ class Tcp extends AbstractClient
     }
 
     /**
-     * @return string
+     * @return ResponseMessage
      */
     protected function read()
     {
