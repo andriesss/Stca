@@ -4,7 +4,7 @@ namespace Stca\Modbus\Message;
 
 use UnexpectedValueException;
 
-class ReadSingleCoilRequest extends AbstractMessage implements RequestInterface
+class ReadSingleCoil extends AbstractMessage implements RequestInterface
 {
     /**
      * @var int
@@ -25,7 +25,7 @@ class ReadSingleCoilRequest extends AbstractMessage implements RequestInterface
 
     /**
      * @param $coil
-     * @return ReadSingleCoilRequest
+     * @return ReadSingleCoil
      */
     public function setCoil($coil)
     {
@@ -46,11 +46,11 @@ class ReadSingleCoilRequest extends AbstractMessage implements RequestInterface
     /**
      * Validate the specified response against the current request.
      *
-     * @param ResponseMessage $response
+     * @param Response $response
      * @throws UnexpectedValueException
      * @return boolean
      */
-    public function validateResponse(ResponseMessage $response)
+    public function validateResponse(Response $response)
     {
         if ($this->getTransactionId() !== $response->getTransactionId()) {
             throw new UnexpectedValueException(

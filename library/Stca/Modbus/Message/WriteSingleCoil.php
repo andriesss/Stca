@@ -4,7 +4,7 @@ namespace Stca\Modbus\Message;
 
 use InvalidArgumentException;
 
-class WriteSingleCoilRequest extends ReadSingleCoilRequest
+class WriteSingleCoil extends ReadSingleCoil
 {
     /**
      * @var boolean
@@ -29,7 +29,7 @@ class WriteSingleCoilRequest extends ReadSingleCoilRequest
      * Sets coil value (true = on, false = off)
      *
      * @param $value
-     * @return WriteSingleCoilRequest
+     * @return WriteSingleCoil
      * @throws InvalidArgumentException
      */
     public function setValue($value)
