@@ -10,6 +10,11 @@ use InvalidArgumentException;
 class Tcp extends AbstractClient
 {
     /**
+     * Number of zero byte writes that are allowed
+     */
+    const ZERO_BYTE_WRITES_ALLOWED = 5;
+
+    /**
      * @var string
      */
     protected $host;
@@ -137,13 +142,38 @@ class Tcp extends AbstractClient
      * Writes a message to the modbus socket
      *
      * @param  string $message in binary
+     * @throws RuntimeException
      * @return Tcp
      */
     protected function write($message)
     {
         $this->assertConnected();
 
-        fwrite($this->socket, $message);
+        $bytesToSend = strlen($message);
+        $numZeroByteWritesLeft = self::ZERO_BYTE_WRITES_ALLOWED;
+
+        do {
+            $sent = fwrite($this->socket, $message);
+            if ($sent === false) {
+                throw new RuntimeException('Error writing to socket.');
+            }
+
+            if ($sent === 0) {
+                // according to its documentation's comments, fwrite returns 0 instead of false on
+                // many errors, such as connection loss.
+                $numZeroByteWritesLeft--;
+                if ($numZeroByteWritesLeft < 0) {
+                    throw new RuntimeException(
+                        sprintf('Error writing to socket: maximum zero byte writes (%s) exceeded', self::ZERO_BYTE_WRITES_ALLOWED)
+                    );
+                }
+            }
+
+            $message = substr($message, $sent);
+
+            $bytesToSend -= $sent;
+        } while ($bytesToSend > 0);
+
         return $this;
     }
 
