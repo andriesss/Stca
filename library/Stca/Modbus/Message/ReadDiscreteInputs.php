@@ -4,6 +4,7 @@ namespace Stca\Modbus\Message;
 
 use UnexpectedValueException;
 use InvalidArgumentException;
+use Stca\Modbus\DataType\DiscreteInput;
 
 /**
  * This function code is used to read from 1 to 2000 contiguous status of discrete inputs in a remote device. The
@@ -52,20 +53,14 @@ class ReadDiscreteInputs extends AbstractMessage implements RequestInterface
      */
     public function setStartingAddress($startingAddress)
     {
-        if ($startingAddress < 0x0000) {
-            throw new InvalidArgumentException('Starting address should be larger than 0x0000');
-        }
-
-        if ($startingAddress > 0xffff) {
-            throw new InvalidArgumentException('Starting address should be smaller than 0xffff');
-        }
+        DiscreteInput::assertValidDiscreteInputAddress($startingAddress);
 
         $this->startingAddress = (int) $startingAddress;
         return $this;
     }
 
     /**
-     * Returns coil address
+     * Returns discrete input address
      *
      * @return int
      */
@@ -75,28 +70,22 @@ class ReadDiscreteInputs extends AbstractMessage implements RequestInterface
     }
 
     /**
-     * Sets amount of contiguous status of coils to read
+     * Sets amount of contiguous status of discrete inputs to read
      *
-     * @param $quantityOfCoils
+     * @param $quantityOfInputs
      * @throws InvalidArgumentException
      * @return ReadCoils
      */
-    public function setQuantityOfInputs($quantityOfCoils)
+    public function setQuantityOfInputs($quantityOfInputs)
     {
-        if ($quantityOfCoils < 1) {
-            throw new InvalidArgumentException('Quantity of inputs should be larger than 1');
-        }
+        DiscreteInput::assertValidQuantityOfDiscreteInputs($quantityOfInputs);
 
-        if ($quantityOfCoils > 0x7d0) {
-            throw new InvalidArgumentException('Quantity of inputs should be smaller than 0x7d0');
-        }
-
-        $this->quantityOfInputs = (int) $quantityOfCoils;
+        $this->quantityOfInputs = (int) $quantityOfInputs;
         return $this;
     }
 
     /**
-     * Returns amount of contiguous status of coils to read
+     * Returns amount of contiguous status of discrete inputs to read
      *
      * @return int
      */
