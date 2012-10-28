@@ -27,7 +27,7 @@ class ReadSingleRegister extends AbstractMessage implements RequestInterface
     /**
      * @param $register
      * @throws InvalidArgumentException
-     * @return ReadSingleCoil
+     * @return ReadSingleRegister
      */
     public function setRegister($register)
     {
