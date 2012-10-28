@@ -13,10 +13,15 @@ use InvalidArgumentException;
  * 0XFF00 requests the coil to be ON. A value of 0X0000 requests the coil to be off. All other values are illegal and
  * will not affect the coil.
  */
-class WriteSingleCoil extends ReadSingleCoil
+class WriteSingleCoil extends AbstractMessage implements RequestInterface
 {
     const ON  = 0xff00;
     const OFF = 0x0000;
+
+    /**
+     * @var int
+     */
+    private $coil;
 
     /**
      * @var boolean
@@ -25,20 +30,41 @@ class WriteSingleCoil extends ReadSingleCoil
 
     /**
      * @param int  $slaveAddress
-     * @param int  $register
+     * @param int  $coil
      * @param bool $value
      */
-    public function __construct($slaveAddress, $register, $value)
+    public function __construct($slaveAddress, $coil, $value)
     {
         $this->setFunctionCode(5);
         $this->setSlaveAddress($slaveAddress);
-        $this->setCoil($register);
+        $this->setCoil($coil);
         $this->setValue($value);
-        $this->setMessageFrame(pack('nn', $register, $value));
+        $this->setMessageFrame(pack('nn', $coil, $value));
     }
 
     /**
-     * Sets coil value (true = on, false = off)
+     * Sets coil address to write to
+     *
+     * @param $coil
+     * @throws InvalidArgumentException
+     * @return WriteSingleCoil
+     */
+    public function setCoil($coil)
+    {
+        if ($coil < 0x0000) {
+            throw new InvalidArgumentException('Coil should be larger than 0x0000');
+        }
+
+        if ($coil > 0xffff) {
+            throw new InvalidArgumentException('Coil should be smaller than 0xffff');
+        }
+
+        $this->coil = (int) $coil;
+        return $this;
+    }
+
+    /**
+     * Sets coil value
      *
      * @param $value
      * @return WriteSingleCoil
@@ -62,5 +88,16 @@ class WriteSingleCoil extends ReadSingleCoil
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * Validate the specified response against the current request.
+     *
+     * @param Response $response
+     * @return boolean
+     */
+    public function validateResponse(Response $response)
+    {
+        // TODO: Implement validateResponse() method.
     }
 }
