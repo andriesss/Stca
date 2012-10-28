@@ -17,10 +17,10 @@ class ReadSingleRegister extends AbstractMessage implements RequestInterface
      */
     public function __construct($slaveAddress, $register)
     {
-        $this->setFunctionCode(0x3);
+        $this->setFunctionCode(3);
         $this->setSlaveAddress($slaveAddress);
         $this->setRegister($register);
-        $this->setMessageFrame(pack('nn', $register, $register -1));
+        $this->setMessageFrame(pack('nn', $register, 1));
     }
 
     /**

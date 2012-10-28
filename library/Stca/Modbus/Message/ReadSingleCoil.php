@@ -17,10 +17,10 @@ class ReadSingleCoil extends AbstractMessage implements RequestInterface
      */
     public function __construct($slaveAddress, $register)
     {
-        $this->setFunctionCode(0x1);
+        $this->setFunctionCode(1);
         $this->setSlaveAddress($slaveAddress);
         $this->setCoil($register);
-        $this->setMessageFrame(pack('n', $this->getCoil()));
+        $this->setMessageFrame(pack('nn', $this->getCoil(), 1));
     }
 
     /**

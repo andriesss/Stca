@@ -185,11 +185,11 @@ class Tcp extends AbstractClient
         $this->assertConnected();
 
         $response = new Response();
-        $response->setTransactionId(bin2hex(fread($this->socket, 2)));
+        $response->setTransactionId(base_convert(bin2hex(fread($this->socket, 2)), 16, 10));
         $response->setProtocol(bin2hex(fread($this->socket, 2)));
 
-        $length = fread($this->socket, 2);
-        $data   = fread($this->socket, (int) bin2hex($length));
+        $length = base_convert(bin2hex(fread($this->socket, 2)), 16, 10);
+        $data   = fread($this->socket, $x= (int) $length);
 
         $response->setFunctionCode(bin2hex(substr($data, 1, 1)));
         $response->setSlaveAddress(bin2hex(substr($data, 0, 1)));

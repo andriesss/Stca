@@ -18,7 +18,7 @@ class WriteSingleCoil extends ReadSingleCoil
      */
     public function __construct($slaveAddress, $register, $value)
     {
-        $this->setFunctionCode(0x5);
+        $this->setFunctionCode(5);
         $this->setSlaveAddress($slaveAddress);
         $this->setCoil($register);
         $this->setValue($value);

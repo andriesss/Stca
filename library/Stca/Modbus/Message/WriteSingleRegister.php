@@ -18,7 +18,7 @@ class WriteSingleRegister extends ReadSingleRegister
      */
     public function __construct($slaveAddress, $register, $value)
     {
-        $this->setFunctionCode(0x6);
+        $this->setFunctionCode(6);
         $this->setSlaveAddress($slaveAddress);
         $this->setRegister($register);
         $this->setValue($value);

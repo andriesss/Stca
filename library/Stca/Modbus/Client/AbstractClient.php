@@ -15,7 +15,7 @@ abstract class AbstractClient implements ClientInterface
     /**
      * @var int
      */
-    private $transactionIdentifier;
+    private $transactionIdentifier = 0;
 
     /**
      * @param int $timeout - socket timeout in seconds
