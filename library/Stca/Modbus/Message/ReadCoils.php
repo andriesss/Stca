@@ -4,6 +4,7 @@ namespace Stca\Modbus\Message;
 
 use UnexpectedValueException;
 use InvalidArgumentException;
+use Stca\Modbus\DataType\Coil;
 
 /**
  * This function code is used to read from 1 to 2000 contiguous status of coils in a remote device. The Request PDU
@@ -51,13 +52,7 @@ class ReadCoils extends AbstractMessage implements RequestInterface
      */
     public function setStartingAddress($startingAddress)
     {
-        if ($startingAddress < 0x0000) {
-            throw new InvalidArgumentException('Starting address should be larger than 0x0000');
-        }
-
-        if ($startingAddress > 0xffff) {
-            throw new InvalidArgumentException('Starting address should be smaller than 0xffff');
-        }
+        Coil::assertValidCoilAddress($startingAddress);
 
         $this->startingAddress = (int) $startingAddress;
         return $this;
@@ -82,13 +77,7 @@ class ReadCoils extends AbstractMessage implements RequestInterface
      */
     public function setQuantityOfCoils($quantityOfCoils)
     {
-        if ($quantityOfCoils < 1) {
-            throw new InvalidArgumentException('Quantity of coils should be larger than 1');
-        }
-
-        if ($quantityOfCoils > 0x7d0) {
-            throw new InvalidArgumentException('Quantity of coils should be smaller than 0x7d0');
-        }
+        Coil::assertValidQuantityOfCoils($quantityOfCoils);
 
         $this->quantityOfCoils = (int) $quantityOfCoils;
         return $this;
