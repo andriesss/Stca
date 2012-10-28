@@ -3,6 +3,7 @@
 namespace Stca\Modbus\Message;
 
 use UnexpectedValueException;
+use InvalidArgumentException;
 
 class ReadSingleRegister extends AbstractMessage implements RequestInterface
 {
@@ -25,10 +26,15 @@ class ReadSingleRegister extends AbstractMessage implements RequestInterface
 
     /**
      * @param $register
+     * @throws InvalidArgumentException
      * @return ReadSingleCoil
      */
     public function setRegister($register)
     {
+        if ($register > 0xffff) {
+            throw new InvalidArgumentException('Invalid register value. Should be <= 0xffff');
+        }
+
         $this->register = (int) $register;
         return $this;
     }

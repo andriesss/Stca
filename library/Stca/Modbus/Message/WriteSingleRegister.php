@@ -4,6 +4,12 @@ namespace Stca\Modbus\Message;
 
 use InvalidArgumentException;
 
+/**
+ * This function code is used to write a single holding register in a remote device. The Request PDU specifies the
+ * address of the register to be written. Registers are addressed starting at zero. Therefore register numbered 1
+ * is addressed as 0. The normal response is an echo of the request, returned after the register contents have
+ * been written.
+ */
 class WriteSingleRegister extends ReadSingleRegister
 {
     /**
@@ -22,7 +28,7 @@ class WriteSingleRegister extends ReadSingleRegister
         $this->setSlaveAddress($slaveAddress);
         $this->setRegister($register);
         $this->setValue($value);
-        $this->setMessageFrame( pack('nn', $register, $value));
+        $this->setMessageFrame(pack('nn', $register, $value));
     }
 
     /**
@@ -34,6 +40,10 @@ class WriteSingleRegister extends ReadSingleRegister
      */
     public function setValue($value)
     {
+        if ($value > 0xffff) {
+            throw new InvalidArgumentException('Invalid register value. Should be <= 0xffff');
+        }
+
         $this->value = $value;
         return $this;
     }
