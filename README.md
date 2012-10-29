@@ -42,6 +42,6 @@ class Pump
         $request = new ReadHoldingRegisters(1, 1, 1);
         $this->modbus->connect()->request($request);
 
-        return $request->getHoldingRegisterByAddress(1)->getValue();
+        return $request->getResult()->getHoldingRegisterByAddress(1)->getValue();
     }
 }
