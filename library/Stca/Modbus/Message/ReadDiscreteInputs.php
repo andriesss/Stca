@@ -94,8 +94,11 @@ class ReadDiscreteInputs extends AbstractRequest
         return $this->quantityOfInputs;
     }
 
+    /**
+     * @return ReadDiscreteInputsResponse
+     */
     public function getResult()
     {
-        // TODO: Implement getResult() method.
+        return new ReadDiscreteInputsResponse($this->getRawResponse(), $this);
     }
 }
