@@ -10,10 +10,14 @@ abstract class AbstractData
     private $address;
 
     /**
-     * @var boolean
+     * @var mixed
      */
     private $value;
 
+    /**
+     * @param $address
+     * @param $value
+     */
     public function __construct($address, $value)
     {
         $this->setAddress($address);
@@ -26,6 +30,14 @@ abstract class AbstractData
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 
     /**
@@ -44,12 +56,7 @@ abstract class AbstractData
      */
     protected function setValue($value)
     {
-        $this->value = (bool) $value;
+        $this->value = $value;
         return $this;
-    }
-
-    protected function getValue()
-    {
-        return $this->value;
     }
 }
