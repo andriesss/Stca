@@ -20,7 +20,7 @@ use Stca\Modbus\Data\InputValidator;
  * will be padded with zeros (toward the high order end of the byte). The Byte Count field
  * specifies the quantity of complete bytes of data.
  */
-class ReadDiscreteInputs extends AbstractMessage implements RequestInterface
+class ReadDiscreteInputs extends AbstractRequest
 {
     /**
      * @var int
@@ -94,27 +94,8 @@ class ReadDiscreteInputs extends AbstractMessage implements RequestInterface
         return $this->quantityOfInputs;
     }
 
-    /**
-     * Validate the specified response against the current request.
-     *
-     * @param Response $response
-     * @throws UnexpectedValueException
-     * @return boolean
-     */
-    public function validateResponse(Response $response)
+    public function getResult()
     {
-        if ($this->getTransactionId() !== $response->getTransactionId()) {
-            throw new UnexpectedValueException(
-                sprintf('Transaction id mismatch. Expected %s, got %s', $this->getTransactionId(), $response->getTransactionId())
-            );
-        }
-
-        if ($this->getSlaveAddress() !== $response->getSlaveAddress()) {
-            throw new UnexpectedValueException(
-                sprintf('Slave address mismatch. Expected %s, got %s', $this->getSlaveAddress(), $response->getSlaveAddress())
-            );
-        }
-
-        return true;
+        // TODO: Implement getResult() method.
     }
 }

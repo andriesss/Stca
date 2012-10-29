@@ -6,7 +6,7 @@ use UnexpectedValueException;
 use InvalidArgumentException;
 use Stca\Modbus\Data\InputValidator;
 
-class ReadSingleRegister extends AbstractMessage implements RequestInterface
+class ReadSingleRegister extends AbstractRequest
 {
     /**
      * @var int
@@ -48,27 +48,8 @@ class ReadSingleRegister extends AbstractMessage implements RequestInterface
         return $this->register;
     }
 
-    /**
-     * Validate the specified response against the current request.
-     *
-     * @param Response $response
-     * @throws UnexpectedValueException
-     * @return boolean
-     */
-    public function validateResponse(Response $response)
+    public function getResult()
     {
-        if ($this->getTransactionId() !== $response->getTransactionId()) {
-            throw new UnexpectedValueException(
-                sprintf('Transaction id mismatch. Expected %s, got %s', $this->getTransactionId(), $response->getTransactionId())
-            );
-        }
-
-        if ($this->getSlaveAddress() !== $response->getSlaveAddress()) {
-            throw new UnexpectedValueException(
-                sprintf('Slave address mismatch. Expected %s, got %s', $this->getSlaveAddress(), $response->getSlaveAddress())
-            );
-        }
-
-        return true;
+        // TODO: Implement getResult() method.
     }
 }

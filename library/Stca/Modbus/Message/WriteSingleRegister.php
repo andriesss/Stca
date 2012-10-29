@@ -56,4 +56,9 @@ class WriteSingleRegister extends ReadSingleRegister
     {
         return $this->value;
     }
+
+    public function getResult()
+    {
+        parent::getResult();
+    }
 }

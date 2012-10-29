@@ -14,7 +14,7 @@ use Stca\Modbus\Data\InputValidator;
  * 0XFF00 requests the coil to be ON. A value of 0X0000 requests the coil to be off. All other values are illegal and
  * will not affect the coil.
  */
-class WriteSingleCoil extends AbstractMessage implements RequestInterface
+class WriteSingleCoil extends AbstractRequest
 {
     /**
      * @var int
@@ -80,14 +80,8 @@ class WriteSingleCoil extends AbstractMessage implements RequestInterface
         return $this->value;
     }
 
-    /**
-     * Validate the specified response against the current request.
-     *
-     * @param Response $response
-     * @return boolean
-     */
-    public function validateResponse(Response $response)
+    public function getResult()
     {
-        // TODO: Implement validateResponse() method.
+        // TODO: Implement getResult() method.
     }
 }

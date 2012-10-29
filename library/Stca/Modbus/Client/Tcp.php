@@ -3,7 +3,7 @@
 namespace Stca\Modbus\Client;
 
 use Stca\Modbus\Message\RequestInterface;
-use Stca\Modbus\Message\Response;
+use Stca\Modbus\Message\RawResponse;
 use RuntimeException;
 use InvalidArgumentException;
 
@@ -114,7 +114,7 @@ class Tcp extends AbstractClient
      * Sends a request to modbus
      *
      * @param RequestInterface $request
-     * @return Response
+     * @return RawResponse
      */
     public function request(RequestInterface $request)
     {
@@ -125,6 +125,8 @@ class Tcp extends AbstractClient
         $response = $this->read();
 
         $request->validateResponse($response);
+        $request->setRawResponse($response);
+
         return $response;
     }
 
@@ -186,7 +188,7 @@ class Tcp extends AbstractClient
 
         $header = unpack('ntransactionId/nprotocol/nlength', fread($this->socket, 6));
 
-        $response = new Response();
+        $response = new RawResponse();
         $response->setTransactionId($header['transactionId']);
         $response->setProtocol($header['protocol']);
 

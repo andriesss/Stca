@@ -19,7 +19,7 @@ use Stca\Modbus\Data\InputValidator;
  * with zeros (toward the high order end of the byte). The Byte Count field specifies the quantity of complete bytes of
  * data.
  */
-class ReadCoils extends AbstractMessage implements RequestInterface
+class ReadCoils extends AbstractRequest
 {
     /**
      * @var int
@@ -94,26 +94,10 @@ class ReadCoils extends AbstractMessage implements RequestInterface
     }
 
     /**
-     * Validate the specified response against the current request.
-     *
-     * @param Response $response
-     * @throws UnexpectedValueException
-     * @return boolean
+     * @return ReadCoilsResponse
      */
-    public function validateResponse(Response $response)
+    public function getResult()
     {
-        if ($this->getTransactionId() !== $response->getTransactionId()) {
-            throw new UnexpectedValueException(
-                sprintf('Transaction id mismatch. Expected %s, got %s', $this->getTransactionId(), $response->getTransactionId())
-            );
-        }
-
-        if ($this->getSlaveAddress() !== $response->getSlaveAddress()) {
-            throw new UnexpectedValueException(
-                sprintf('Slave address mismatch. Expected %s, got %s', $this->getSlaveAddress(), $response->getSlaveAddress())
-            );
-        }
-
-        return true;
+        return new ReadCoilsResponse($this->getRawResponse(), $this);
     }
 }

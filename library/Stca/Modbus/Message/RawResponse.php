@@ -2,9 +2,10 @@
 
 namespace Stca\Modbus\Message;
 
+use Stca\Modbus\Message\AbstractMessage;
 use InvalidArgumentException;
 
-class Response extends AbstractMessage
+class RawResponse extends AbstractMessage
 {
     /**
      * @var null|string
@@ -15,7 +16,7 @@ class Response extends AbstractMessage
      * Sets protocol identifier
      *
      * @param  string $protocol
-     * @return Response
+     * @return RawResponse
      * @throws InvalidArgumentException
      */
     public function setProtocol($protocol)

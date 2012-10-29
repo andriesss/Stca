@@ -16,10 +16,27 @@ interface RequestInterface extends MessageInterface
     const WRITE_SINGLE_REGISTER  = 0x06;
 
     /**
+     * Sets raw response
+     *
+     * @param $response
+     * @return mixed
+     */
+    public function setRawResponse(RawResponse $response);
+
+    /**
+     * Returns raw response
+     *
+     * @return mixed
+     */
+    public function getRawResponse();
+
+    /**
      * Validate the specified response against the current request.
      *
-     * @param Response $response
+     * @param RawResponse $response
      * @return boolean
      */
-    public function validateResponse(Response $response);
+    public function validateResponse(RawResponse $response);
+
+    public function getResult();
 }

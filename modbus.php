@@ -16,11 +16,12 @@ use Stca\Modbus\Message\ReadDiscreteInputs;
 use Stca\Modbus\Message\ReadSingleRegister;
 
 $client = new TcpClient('127.0.0.1');
+//$client = new TcpClient('10.1.35.250', 10502);
 $client->connect();
 
-var_dump($client->request(new WriteSingleCoil(1, 1, Coil::ON)));
-var_dump($client->request(new WriteSingleRegister(1, 1, 100)));
+$request = new ReadCoils(1, 0, 9);
+$response = $client->request($request);
+var_dump($request->getResult()->getCoils());
 
-var_dump($client->request(new ReadCoils(1, 1, 2)));
-var_dump($client->request(new ReadSingleRegister(1, 1)));
-var_dump($client->request(new ReadDiscreteInputs(1, 1, 2)));
+//var_dump($client->request(new WriteSingleCoil(1, 1, Coil::ON)));
+//var_dump($client->request(new WriteSingleRegister(1, 1, 100)));
