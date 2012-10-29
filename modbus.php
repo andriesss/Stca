@@ -7,7 +7,7 @@ spl_autoload_register(function($className) {
 });
 
 use Stca\Modbus\Client\Tcp as TcpClient;
-use Stca\Modbus\DataType\Coil;
+use Stca\Modbus\Data\Coil;
 use Stca\Modbus\Message\WriteSingleCoil;
 use Stca\Modbus\Message\WriteSingleRegister;
 
@@ -15,10 +15,8 @@ use Stca\Modbus\Message\ReadCoils;
 use Stca\Modbus\Message\ReadDiscreteInputs;
 use Stca\Modbus\Message\ReadSingleRegister;
 
-
 $client = new TcpClient('127.0.0.1');
 $client->connect();
-
 
 var_dump($client->request(new WriteSingleCoil(1, 1, Coil::ON)));
 var_dump($client->request(new WriteSingleRegister(1, 1, 100)));

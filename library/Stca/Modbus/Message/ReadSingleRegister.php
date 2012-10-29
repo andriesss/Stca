@@ -4,7 +4,7 @@ namespace Stca\Modbus\Message;
 
 use UnexpectedValueException;
 use InvalidArgumentException;
-use Stca\Modbus\DataType\Register;
+use Stca\Modbus\Data\InputValidator;
 
 class ReadSingleRegister extends AbstractMessage implements RequestInterface
 {
@@ -32,7 +32,7 @@ class ReadSingleRegister extends AbstractMessage implements RequestInterface
      */
     public function setRegister($register)
     {
-        Register::assertValidRegisterAddress($register);
+        InputValidator::assertValidAddress($register);
 
         $this->register = (int) $register;
         return $this;

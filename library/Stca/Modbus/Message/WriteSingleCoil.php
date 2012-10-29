@@ -3,7 +3,7 @@
 namespace Stca\Modbus\Message;
 
 use InvalidArgumentException;
-use Stca\Modbus\DataType\Coil;
+use Stca\Modbus\Data\InputValidator;
 
 /**
  * This function code is used to write a single output to either ON or OFF in a remote device. The requested ON/OFF
@@ -49,7 +49,7 @@ class WriteSingleCoil extends AbstractMessage implements RequestInterface
      */
     public function setCoil($coil)
     {
-        Coil::assertValidCoilAddress($coil);
+        InputValidator::assertValidAddress($coil);
 
         $this->coil = (int) $coil;
         return $this;
@@ -64,7 +64,7 @@ class WriteSingleCoil extends AbstractMessage implements RequestInterface
      */
     public function setValue($value)
     {
-        Coil::assertValidCoilValue($value);
+        InputValidator::assertValidCoilValue($value);
 
         $this->value = $value;
         return $this;

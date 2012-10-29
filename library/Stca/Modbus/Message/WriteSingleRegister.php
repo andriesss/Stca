@@ -3,7 +3,7 @@
 namespace Stca\Modbus\Message;
 
 use InvalidArgumentException;
-use Stca\Modbus\DataType\Register;
+use Stca\Modbus\Data\InputValidator;
 
 /**
  * This function code is used to write a single holding register in a remote device. The Request PDU specifies the
@@ -41,7 +41,7 @@ class WriteSingleRegister extends ReadSingleRegister
      */
     public function setValue($value)
     {
-        Register::assertValidRegisterValue($value);
+        InputValidator::assertValidRegisterValue($value);
 
         $this->value = $value;
         return $this;

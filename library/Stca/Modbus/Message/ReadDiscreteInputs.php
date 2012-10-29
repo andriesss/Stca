@@ -4,7 +4,7 @@ namespace Stca\Modbus\Message;
 
 use UnexpectedValueException;
 use InvalidArgumentException;
-use Stca\Modbus\DataType\DiscreteInput;
+use Stca\Modbus\Data\InputValidator;
 
 /**
  * This function code is used to read from 1 to 2000 contiguous status of discrete inputs in a remote device. The
@@ -53,7 +53,7 @@ class ReadDiscreteInputs extends AbstractMessage implements RequestInterface
      */
     public function setStartingAddress($startingAddress)
     {
-        DiscreteInput::assertValidDiscreteInputAddress($startingAddress);
+        InputValidator::assertValidAddress($startingAddress);
 
         $this->startingAddress = (int) $startingAddress;
         return $this;
@@ -78,7 +78,7 @@ class ReadDiscreteInputs extends AbstractMessage implements RequestInterface
      */
     public function setQuantityOfInputs($quantityOfInputs)
     {
-        DiscreteInput::assertValidQuantityOfDiscreteInputs($quantityOfInputs);
+        InputValidator::assertValidQuantityOfBits($quantityOfInputs);
 
         $this->quantityOfInputs = (int) $quantityOfInputs;
         return $this;
