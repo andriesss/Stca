@@ -184,16 +184,17 @@ class Tcp extends AbstractClient
     {
         $this->assertConnected();
 
+        $header = unpack('ntransactionId/nprotocol/nlength', fread($this->socket, 6));
+
         $response = new Response();
-        $response->setTransactionId(base_convert(bin2hex(fread($this->socket, 2)), 16, 10));
-        $response->setProtocol(bin2hex(fread($this->socket, 2)));
+        $response->setTransactionId($header['transactionId']);
+        $response->setProtocol($header['protocol']);
 
-        $length = base_convert(bin2hex(fread($this->socket, 2)), 16, 10);
-        $data   = fread($this->socket, $x= (int) $length);
+        $content = unpack('CslaveAddress/CfunctionCode/H*messageFrame', fread($this->socket, $header['length']));
 
-        $response->setFunctionCode(bin2hex(substr($data, 1, 1)));
-        $response->setSlaveAddress(bin2hex(substr($data, 0, 1)));
-        $response->setMessageFrame(bin2hex(substr($data, 3)));
+        $response->setFunctionCode($content['functionCode']);
+        $response->setSlaveAddress($content['slaveAddress']);
+        $response->setMessageFrame(pack('H*', $content['messageFrame']));
 
         return $response;
     }
