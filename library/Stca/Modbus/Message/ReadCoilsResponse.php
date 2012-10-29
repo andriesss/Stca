@@ -60,7 +60,8 @@ class ReadCoilsResponse extends AbstractResponse
                 break;
             }
 
-            $this->result[$startingAddress++] = new Coil($this->getRawResponse()->getSlaveAddress(),  ($bits & (1 << $i)) !== 0);
+            $coilAddress = $startingAddress++;
+            $this->result[$coilAddress] = new Coil($coilAddress,  ($bits & (1 << $i)) !== 0);
         }
 
         return $this->result;
