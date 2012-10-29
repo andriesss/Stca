@@ -39,4 +39,16 @@ class RawResponse extends AbstractMessage
     {
         return $this->protocol;
     }
+
+    /**
+     * Returns byte count
+     *
+     * This is the the total length of the data in the response
+     *
+     * @return int
+     */
+    public function getByteCount()
+    {
+        return ord(substr($this->getMessageFrame(), 0, 1));
+    }
 }

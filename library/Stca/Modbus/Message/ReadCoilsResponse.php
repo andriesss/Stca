@@ -51,16 +51,15 @@ class ReadCoilsResponse extends AbstractResponse
      */
     protected function parse()
     {
-        $frame = $this->getRawResponse()->getMessageFrame();
-        $byteCount = ord(substr($frame, 0, 1));
+        $response = $this->getRawResponse();
 
         // use little endian byte order
-        $bits = unpack('v', substr($frame, 1));
+        $bits = unpack('v', substr($response->getMessageFrame(), 1));
         $bits = $bits[1];
 
         $startingAddress = $this->getRequest()->getStartingAddress();
 
-        for ($i = 0; $i <= $byteCount * 8; $i++) {
+        for ($i = 0; $i <= $response->getByteCount() * 8; $i++) {
             if ($i == $this->getRequest()->getQuantityOfCoils()) {
                 break;
             }
