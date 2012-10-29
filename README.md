@@ -8,6 +8,7 @@ We do a lot of industrial aumation at my job, and I wanted to learn more about M
 <?php
 
 use Stca\Modbus\Client\Tcp as TcpClient;
+use Stca\Modbus\Data\Coil;
 use Stca\Modbus\Message\WriteSingleCoil;
 use Stca\Modbus\Message\ReadSingleRegister;
 
@@ -22,12 +23,12 @@ class Pump
 
     public function shutdown()
     {
-        $this->modbus->connect()->request(new WriteSingleCoil(1, 1, false));
+        $this->modbus->connect()->request(new WriteSingleCoil(1, 1, Coil::OFF));
     }
 
     public function start()
     {
-        $this->modbus->connect()->request(new WriteSingleCoil(1, 1, true));
+        $this->modbus->connect()->request(new WriteSingleCoil(1, 1, Coil::ON));
     }
 
     public function reboot()
