@@ -38,7 +38,7 @@ class ReadCoils extends AbstractMessage implements RequestInterface
      */
     public function __construct($slaveAddress, $startingAddress, $quantityOfCoils)
     {
-        $this->setFunctionCode(1);
+        $this->setFunctionCode(RequestInterface::READ_COILS);
         $this->setSlaveAddress($slaveAddress);
         $this->setStartingAddress($startingAddress);
         $this->setQuantityOfCoils($quantityOfCoils);

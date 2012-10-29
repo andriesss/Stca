@@ -39,7 +39,7 @@ class ReadDiscreteInputs extends AbstractMessage implements RequestInterface
      */
     public function __construct($slaveAddress, $startingAddress, $quantityOfInputs)
     {
-        $this->setFunctionCode(2);
+        $this->setFunctionCode(RequestInterface::READ_DISCRETE_INPUTS);
         $this->setSlaveAddress($slaveAddress);
         $this->setStartingAddress($startingAddress);
         $this->setQuantityOfInputs($quantityOfInputs);

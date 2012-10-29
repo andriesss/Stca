@@ -33,7 +33,7 @@ class WriteSingleCoil extends AbstractMessage implements RequestInterface
      */
     public function __construct($slaveAddress, $coil, $value)
     {
-        $this->setFunctionCode(5);
+        $this->setFunctionCode(RequestInterface::WRITE_SINGLE_COIL);
         $this->setSlaveAddress($slaveAddress);
         $this->setCoil($coil);
         $this->setValue($value);
