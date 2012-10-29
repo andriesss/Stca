@@ -66,7 +66,7 @@ class Tcp extends AbstractClient
         $start = time();
 
         do {
-            $this->socket = stream_socket_client($this->getConnectionString(), $errno, $errstr, $this->getTimeout());
+            $this->socket = @stream_socket_client($this->getConnectionString(), $errno, $errstr, $this->getTimeout());
             if (false === $this->socket) {
                 throw new \RuntimeException($errstr, $errno);
             }
