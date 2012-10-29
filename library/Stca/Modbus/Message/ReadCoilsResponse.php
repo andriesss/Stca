@@ -8,6 +8,10 @@ class ReadCoilsResponse extends AbstractResponse
 {
     protected $result = array();
 
+    /**
+     * @param RawResponse      $response
+     * @param RequestInterface $request
+     */
     public function __construct(RawResponse $response, RequestInterface $request)
     {
         parent::__construct($response, $request);
@@ -50,7 +54,8 @@ class ReadCoilsResponse extends AbstractResponse
         $frame = $this->getRawResponse()->getMessageFrame();
         $byteCount = ord(substr($frame, 0, 1));
 
-        $bits = unpack('n', substr($frame, 1));
+        // use little endian byte order
+        $bits = unpack('v', substr($frame, 1));
         $bits = $bits[1];
 
         $startingAddress = $this->getRequest()->getStartingAddress();
