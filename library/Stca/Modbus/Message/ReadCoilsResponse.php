@@ -10,12 +10,13 @@ class ReadCoilsResponse extends AbstractResponse
     protected $result = array();
 
     /**
-     * @param RawResponse      $response
+     * Class constructor, inject request dependency
+     *
      * @param RequestInterface $request
      */
-    public function __construct(RawResponse $response, RequestInterface $request)
+    public function __construct(RequestInterface $request)
     {
-        parent::__construct($response, $request);
+        parent::__construct($request);
 
         $this->parse();
     }
@@ -52,7 +53,7 @@ class ReadCoilsResponse extends AbstractResponse
      */
     protected function parse()
     {
-        $response = $this->getRawResponse();
+        $response = $this->getRequest()->getRawResponse();
 
         // use little endian byte order
         $bits = unpack('v', substr($response->getMessageFrame(), 1));

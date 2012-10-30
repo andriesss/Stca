@@ -100,7 +100,7 @@ class ReadDiscreteInputs extends AbstractRequest
     {
         static $result;
         if (null === $result) {
-            $result = new ReadDiscreteInputsResponse($this->getRawResponse(), $this);
+            $result = new ReadDiscreteInputsResponse($this);
         }
 
         return $result;

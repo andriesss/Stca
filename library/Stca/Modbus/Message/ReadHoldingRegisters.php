@@ -87,7 +87,7 @@ class ReadHoldingRegisters extends AbstractRequest
     {
         static $result;
         if (null === $result) {
-            $result = new ReadHoldingRegistersResponse($this->getRawResponse(), $this);
+            $result = new ReadHoldingRegistersResponse($this);
         }
 
         return $result;

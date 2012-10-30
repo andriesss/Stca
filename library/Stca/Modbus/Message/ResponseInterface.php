@@ -5,19 +5,11 @@ namespace Stca\Modbus\Message;
 interface ResponseInterface
 {
     /**
-     * Sets raw response
+     * Class constructor, inject request dependency
      *
-     * @param RawResponse $response
      * @param RequestInterface $request
      */
-    public function __construct(RawResponse $response, RequestInterface $request);
-
-    /**
-     * Returns raw
-     *
-     * @return RawResponse
-     */
-    public function getRawResponse();
+    public function __construct(RequestInterface $request);
 
     /**
      * Returns request

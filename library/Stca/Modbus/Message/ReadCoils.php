@@ -101,7 +101,7 @@ class ReadCoils extends AbstractRequest
     {
         static $result;
         if (null === $result) {
-            $result = new ReadCoilsResponse($this->getRawResponse(), $this);
+            $result = new ReadCoilsResponse($this);
         }
 
         return $result;

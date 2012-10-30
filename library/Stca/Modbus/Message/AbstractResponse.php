@@ -15,28 +15,16 @@ abstract class AbstractResponse implements ResponseInterface
     private $request;
 
     /**
-     * Sets raw response
+     * Class constructor, inject request dependency
      *
-     * @param RawResponse $response
      * @param RequestInterface $request
      * @return mixed
      */
-    public function __construct(RawResponse $response, RequestInterface $request)
+    public function __construct(RequestInterface $request)
     {
-        $this->rawResponse = $response;
-        $this->request     = $request;
+        $this->request = $request;
 
         return $this;
-    }
-
-    /**
-     * Returns raw
-     *
-     * @return RawResponse
-     */
-    public function getRawResponse()
-    {
-        return $this->rawResponse;
     }
 
     /**
