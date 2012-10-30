@@ -33,7 +33,7 @@ class ReadCoils extends AbstractRequest
 
     /**
      * @param $slaveAddress
-     * @param $startingAddress
+     * @param $startingAddress - the address of the first coil (0x0000 to 0xffff)
      * @param $quantityOfCoils
      */
     public function __construct($slaveAddress, $startingAddress, $quantityOfCoils)
@@ -46,7 +46,9 @@ class ReadCoils extends AbstractRequest
     }
 
     /**
-     * @param $startingAddress
+     * Sets the starting address of the first coil to read from
+     *
+     * @param  int $startingAddress - the address of the first coil (0x0000 to 0xffff)
      * @throws InvalidArgumentException
      * @return ReadCoils
      */
@@ -59,7 +61,7 @@ class ReadCoils extends AbstractRequest
     }
 
     /**
-     * Returns coil address
+     * Returns coil address of the first coil to read from
      *
      * @return int
      */
@@ -71,7 +73,7 @@ class ReadCoils extends AbstractRequest
     /**
      * Sets amount of contiguous status of coils to read
      *
-     * @param $quantityOfCoils
+     * @param  int $quantityOfCoils - quantity of coils to read (0x01 to 0x7d)
      * @throws InvalidArgumentException
      * @return ReadCoils
      */
@@ -98,6 +100,11 @@ class ReadCoils extends AbstractRequest
      */
     public function getResult()
     {
-        return new ReadCoilsResponse($this->getRawResponse(), $this);
+        static $result;
+        if (null === $result) {
+            $result = new ReadCoilsResponse($this->getRawResponse(), $this);
+        }
+
+        return $result;
     }
 }

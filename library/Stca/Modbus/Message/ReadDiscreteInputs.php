@@ -99,6 +99,11 @@ class ReadDiscreteInputs extends AbstractRequest
      */
     public function getResult()
     {
-        return new ReadDiscreteInputsResponse($this->getRawResponse(), $this);
+        static $result;
+        if (null === $result) {
+            $result = new ReadDiscreteInputsResponse($this->getRawResponse(), $this);
+        }
+
+        return $result;
     }
 }
