@@ -7,20 +7,6 @@ use Stca\Modbus\Message\Exception\RuntimeException;
 
 class ReadDiscreteInputsResponse extends AbstractResponse
 {
-    protected $result = array();
-
-    /**
-     * Class constructor, inject request dependency
-     *
-     * @param RequestInterface $request
-     */
-    public function __construct(RequestInterface $request)
-    {
-        parent::__construct($request);
-
-        $this->parse();
-    }
-
     /**
      * Returns all coils
      *
@@ -47,6 +33,20 @@ class ReadDiscreteInputsResponse extends AbstractResponse
     }
 
     /**
+     * @return ReadDiscreteInputs
+     * @throws RuntimeException
+     */
+    public function getRequest()
+    {
+        $request = parent::getRequest();
+        if (!$request instanceof ReadDiscreteInputs) {
+            throw new RuntimeException('This error really should not occur, but its here because php does not support templates');
+        }
+
+        return $request;
+    }
+
+    /**
      * Parses raw response
      *
      * @return array
@@ -61,29 +61,17 @@ class ReadDiscreteInputsResponse extends AbstractResponse
 
         $startingAddress = $this->getRequest()->getStartingAddress();
 
+        $result = array();
         for ($i = 0; $i <= $response->getByteCount() * 8; $i++) {
             if ($i == $this->getRequest()->getQuantityOfInputs()) {
                 break;
             }
 
             $address = $startingAddress++;
-            $this->result[$address] = new DiscreteInput($address,  ($bits & (1 << $i)) !== 0);
+            $result[$address] = new DiscreteInput($address,  ($bits & (1 << $i)) !== 0);
         }
 
-        return $this->result;
+        return $result;
     }
 
-    /**
-     * @return ReadDiscreteInputs
-     * @throws RuntimeException
-     */
-    public function getRequest()
-    {
-        $request = parent::getRequest();
-        if (!$request instanceof ReadDiscreteInputs) {
-            throw new RuntimeException('This error really should not occur, but its here because php does not support templates');
-        }
-
-        return $request;
-    }
 }

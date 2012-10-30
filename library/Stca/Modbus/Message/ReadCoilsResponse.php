@@ -7,20 +7,6 @@ use Stca\Modbus\Message\Exception\RuntimeException;
 
 class ReadCoilsResponse extends AbstractResponse
 {
-    protected $result = array();
-
-    /**
-     * Class constructor, inject request dependency
-     *
-     * @param RequestInterface $request
-     */
-    public function __construct(RequestInterface $request)
-    {
-        parent::__construct($request);
-
-        $this->parse();
-    }
-
     /**
      * Returns all coils
      *
@@ -47,6 +33,20 @@ class ReadCoilsResponse extends AbstractResponse
     }
 
     /**
+     * @return ReadCoils
+     * @throws RuntimeException
+     */
+    public function getRequest()
+    {
+        $request = parent::getRequest();
+        if (!$request instanceof ReadCoils) {
+            throw new RuntimeException('This error really should not occur, but its here because php does not support templates');
+        }
+
+        return $request;
+    }
+
+    /**
      * Parses raw response
      *
      * @return array
@@ -61,29 +61,16 @@ class ReadCoilsResponse extends AbstractResponse
 
         $startingAddress = $this->getRequest()->getStartingAddress();
 
+        $result = array();
         for ($i = 0; $i <= $response->getByteCount() * 8; $i++) {
             if ($i == $this->getRequest()->getQuantityOfCoils()) {
                 break;
             }
 
             $coilAddress = $startingAddress++;
-            $this->result[$coilAddress] = new Coil($coilAddress,  ($bits & (1 << $i)) !== 0);
+            $result[$coilAddress] = new Coil($coilAddress,  ($bits & (1 << $i)) !== 0);
         }
 
-        return $this->result;
-    }
-
-    /**
-     * @return ReadCoils
-     * @throws RuntimeException
-     */
-    public function getRequest()
-    {
-        $request = parent::getRequest();
-        if (!$request instanceof ReadCoils) {
-            throw new RuntimeException('This error really should not occur, but its here because php does not support templates');
-        }
-
-        return $request;
+        return $result;
     }
 }

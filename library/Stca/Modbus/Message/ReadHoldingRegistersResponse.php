@@ -7,20 +7,6 @@ use Stca\Modbus\Message\Exception\RuntimeException;
 
 class ReadHoldingRegistersResponse extends AbstractResponse
 {
-    protected $result = array();
-
-    /**
-     * Class constructor, inject request dependency
-     *
-     * @param RequestInterface $request
-     */
-    public function __construct(RequestInterface $request)
-    {
-        parent::__construct($request);
-
-        $this->parse();
-    }
-
     /**
      * Returns all holding registers
      *
@@ -47,27 +33,6 @@ class ReadHoldingRegistersResponse extends AbstractResponse
     }
 
     /**
-     * Parses raw response
-     *
-     * @return array
-     */
-    protected function parse()
-    {
-        $response = $this->getRequest()->getRawResponse();
-
-        $startingAddress = $this->getRequest()->getStartingAddress();
-
-        // use little endian byte order
-        $values = unpack('n' . $response->getByteCount() / 2, substr($response->getMessageFrame(), 1));
-        foreach ($values as $registerValue) {
-            $address = $startingAddress++;
-            $this->result[$address] = new HoldingRegister($address, $registerValue);
-        }
-
-        return $this->result;
-    }
-
-    /**
      * @return ReadHoldingRegisters
      * @throws RuntimeException
      */
@@ -79,5 +44,28 @@ class ReadHoldingRegistersResponse extends AbstractResponse
         }
 
         return $request;
+    }
+
+    /**
+     * Parses raw response
+     *
+     * @return array
+     */
+    protected function parse()
+    {
+        $response = $this->getRequest()->getRawResponse();
+
+        $startingAddress = $this->getRequest()->getStartingAddress();
+
+        $result = array();
+
+        // use little endian byte order
+        $values = unpack('n' . $response->getByteCount() / 2, substr($response->getMessageFrame(), 1));
+        foreach ($values as $registerValue) {
+            $address = $startingAddress++;
+            $result[$address] = new HoldingRegister($address, $registerValue);
+        }
+
+        return $result;
     }
 }

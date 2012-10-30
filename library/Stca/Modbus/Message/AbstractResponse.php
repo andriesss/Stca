@@ -5,9 +5,9 @@ namespace Stca\Modbus\Message;
 abstract class AbstractResponse implements ResponseInterface
 {
     /**
-     * @var RawResponse
+     * @var mixed
      */
-    private $rawResponse;
+    protected $result;
 
     /**
      * @var RequestInterface
@@ -23,6 +23,7 @@ abstract class AbstractResponse implements ResponseInterface
     public function __construct(RequestInterface $request)
     {
         $this->request = $request;
+        $this->result  = $this->parse();
 
         return $this;
     }
@@ -36,4 +37,11 @@ abstract class AbstractResponse implements ResponseInterface
     {
         return $this->request;
     }
+
+    /**
+     * Implement logic to parse raw response
+     *
+     * @return mixed
+     */
+    abstract protected function parse();
 }
