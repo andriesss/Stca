@@ -3,6 +3,7 @@
 namespace Stca\Modbus\Message;
 
 use Stca\Modbus\Data\HoldingRegister;
+use Stca\Modbus\Message\Exception\RuntimeException;
 
 class ReadHoldingRegistersResponse extends AbstractResponse
 {
@@ -67,13 +68,13 @@ class ReadHoldingRegistersResponse extends AbstractResponse
 
     /**
      * @return ReadHoldingRegisters
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function getRequest()
     {
         $request = parent::getRequest();
         if (!$request instanceof ReadHoldingRegisters) {
-            throw new \RuntimeException('This error really should not occur, but its here because php does not support templates');
+            throw new RuntimeException('This error really should not occur, but its here because php does not support templates');
         }
 
         return $request;

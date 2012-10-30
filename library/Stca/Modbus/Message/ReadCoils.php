@@ -2,8 +2,7 @@
 
 namespace Stca\Modbus\Message;
 
-use UnexpectedValueException;
-use InvalidArgumentException;
+use Stca\Modbus\Message\Exception\InvalidArgumentException;
 use Stca\Modbus\Data\InputValidator;
 
 /**

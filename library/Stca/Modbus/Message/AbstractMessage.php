@@ -2,7 +2,7 @@
 
 namespace Stca\Modbus\Message;
 
-use InvalidArgumentException;
+use Stca\Modbus\Message\Exception\InvalidArgumentException;
 
 abstract class AbstractMessage implements MessageInterface
 {

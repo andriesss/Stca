@@ -3,6 +3,7 @@
 namespace Stca\Modbus\Message;
 
 use Stca\Modbus\Data\DiscreteInput;
+use Stca\Modbus\Message\Exception\RuntimeException;
 
 class ReadDiscreteInputsResponse extends AbstractResponse
 {
@@ -73,13 +74,13 @@ class ReadDiscreteInputsResponse extends AbstractResponse
 
     /**
      * @return ReadDiscreteInputs
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function getRequest()
     {
         $request = parent::getRequest();
         if (!$request instanceof ReadDiscreteInputs) {
-            throw new \RuntimeException('This error really should not occur, but its here because php does not support templates');
+            throw new RuntimeException('This error really should not occur, but its here because php does not support templates');
         }
 
         return $request;

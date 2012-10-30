@@ -3,7 +3,7 @@
 namespace Stca\Modbus\Message;
 
 use Stca\Modbus\Message\AbstractMessage;
-use InvalidArgumentException;
+use Stca\Modbus\Message\Exception\InvalidArgumentException;
 
 class RawResponse extends AbstractMessage
 {
