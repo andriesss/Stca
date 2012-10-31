@@ -2,7 +2,7 @@
 
 namespace Stca\Modbus\Message;
 
-use InvalidArgumentException;
+use Stca\Modbus\Message\Exception\InvalidArgumentException;
 use Stca\Modbus\Data\InputValidator;
 
 /**

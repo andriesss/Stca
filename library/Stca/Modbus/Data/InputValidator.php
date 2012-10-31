@@ -2,7 +2,7 @@
 
 namespace Stca\Modbus\Data;
 
-use InvalidArgumentException;
+use Stca\Modbus\Data\Exception\InvalidArgumentException;
 
 /**
  * There are two single byte types in modbus:
@@ -64,21 +64,21 @@ class InputValidator
     }
 
     /**
-      * Asserts that the given quantity of registers is valid
-      *
-      * @param  int $quantityOfRegisters
-      * @throws InvalidArgumentException
-      */
-     public static function assertValidQuantityOfRegisters($quantityOfRegisters)
-     {
-         if ($quantityOfRegisters < 1) {
-             throw new InvalidArgumentException('Invalid quantity of registers, should be >= 1');
-         }
+     * Asserts that the given quantity of registers is valid
+     *
+     * @param  int $quantityOfRegisters
+     * @throws InvalidArgumentException
+     */
+    public static function assertValidQuantityOfRegisters($quantityOfRegisters)
+    {
+        if ($quantityOfRegisters < 1) {
+            throw new InvalidArgumentException('Invalid quantity of registers, should be >= 1');
+        }
 
-         if ($quantityOfRegisters > 0x7d) {
-             throw new InvalidArgumentException('Invalid quantity of registers, should be <= 0x7d');
-         }
-     }
+        if ($quantityOfRegisters > 0x7d) {
+            throw new InvalidArgumentException('Invalid quantity of registers, should be <= 0x7d');
+        }
+    }
 
     /**
      * Asserts that the given coil value is valid
