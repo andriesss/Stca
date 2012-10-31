@@ -1,6 +1,6 @@
 # Modbus
 This library allows for quick prototyping of industrial applications with modbus and PHP.
-We do a lot of industrial aumation at my job, and I wanted to learn more about Modbus, so I implemented a PHP client to get a better understanding of the protocol.
+We do a lot of industrial automation at my job, and I wanted to learn more about Modbus, so I implemented a PHP client to get a better understanding of the protocol.
 
 ### Connecting to modbus using TCP
 
