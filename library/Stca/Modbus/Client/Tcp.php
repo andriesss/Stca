@@ -180,7 +180,7 @@ class Tcp extends AbstractClient
     }
 
     /**
-     * @return Response
+     * @return RawResponse
      */
     protected function read()
     {
