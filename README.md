@@ -12,7 +12,7 @@ use Stca\Modbus\Client\Tcp as TcpClient;
 // connect to modbus
 $modbus  = new TcpClient('127.0.0.1');
 $modbus->connect();
-´´´
+```
 
 ### Read all coil values
 ```php
@@ -28,7 +28,8 @@ var_dump($request->getResult()->getCoils());
 
 // dump status of coil with address 0
 var_dump($request->getResult()->getCoilByAddress(1));
-´´´
+
+```
 
 
 ### Read all discrete inputs
@@ -45,7 +46,7 @@ var_dump($request->getResult()->getDiscreteInputs());
 
 // dump status of discrete input with address 0
 var_dump($request->getResult()->getDiscreteInputByAddress(1));
-´´´
+```
 
 ### Read all holding registers from 0 - 0x7d
 ```php
@@ -61,4 +62,4 @@ var_dump($request->getResult()->getHoldingRegisters());
 
 // dump status of  holding registers with address 0
 var_dump($request->getResult()->getHoldingRegisterByAddress(1));
-´´´
+```
