@@ -4,8 +4,8 @@ namespace Stca\Modbus\Client;
 
 use Stca\Modbus\Message\RequestInterface;
 use Stca\Modbus\Message\RawResponse;
-use RuntimeException;
-use InvalidArgumentException;
+use Stca\Modbus\Client\Exception\RuntimeException;
+use Stca\Modbus\Client\Exception\InvalidArgumentException;
 
 class Tcp extends AbstractClient
 {
@@ -17,6 +17,7 @@ class Tcp extends AbstractClient
     /**
      * @var string
      */
+
     protected $host;
 
     /**
@@ -68,7 +69,7 @@ class Tcp extends AbstractClient
         do {
             $this->socket = @stream_socket_client($this->getConnectionString(), $errno, $errstr, $this->getTimeout());
             if (false === $this->socket) {
-                throw new \RuntimeException($errstr, $errno);
+                throw new RuntimeException($errstr, $errno);
             }
 
             if (!$this->socket) {
