@@ -11,10 +11,15 @@ use Stca\Modbus\Data\InputValidator;
  * is addressed as 0. The normal response is an echo of the request, returned after the register contents have
  * been written.
  */
-class WriteSingleRegister extends ReadSingleRegister
+class WriteSingleRegister extends AbstractRequest
 {
     /**
-     * @var boolean
+     * @var int
+     */
+    private $register;
+
+    /**
+     * @var int
      */
     private $value;
 
@@ -30,6 +35,26 @@ class WriteSingleRegister extends ReadSingleRegister
         $this->setRegister($register);
         $this->setValue($value);
         $this->setMessageFrame(pack('nn', $register, $value));
+    }
+
+    /**
+     * @param $register
+     * @return WriteSingleRegister
+     */
+    public function setRegister($register)
+    {
+        InputValidator::assertValidAddress($register);
+
+        $this->register = (int) $register;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRegister()
+    {
+        return $this->register;
     }
 
     /**
@@ -59,6 +84,6 @@ class WriteSingleRegister extends ReadSingleRegister
 
     public function getResult()
     {
-        parent::getResult();
+        // todo
     }
 }
