@@ -48,7 +48,7 @@ var_dump($request->getResult()->getDiscreteInputs());
 var_dump($request->getResult()->getDiscreteInputByAddress(1));
 ```
 
-### Read all holding registers from 0 - 0x7d
+### Read all holding registers
 ```php
 <?php
 
@@ -62,4 +62,33 @@ var_dump($request->getResult()->getHoldingRegisters());
 
 // dump status of  holding registers with address 0
 var_dump($request->getResult()->getHoldingRegisterByAddress(1));
+```
+
+### Writing to a coil
+```php
+<?php
+
+use Stca\Modbus\Message\WriteSingleCoil;
+use Stca\Modbus\Data\Coil;
+
+$request = new WriteSingleCoil(1, 0, Coil::ON);
+$modbus->request($request);
+
+$request = new WriteSingleCoil(1, 0, Coil::OFF);
+$modbus->request($request);
+
+```
+
+### Writing to a register
+```php
+<?php
+
+use Stca\Modbus\Message\WriteSingleRegister;
+
+$request = new WriteSingleRegister(1, 0, 0xffff);
+$modbus->request($request);
+
+$request = new WriteSingleRegister(1, 2, 0xff);
+$modbus->request($request);
+
 ```
